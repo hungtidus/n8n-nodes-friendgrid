@@ -109,16 +109,16 @@ export class FriendGrid implements INodeType {
 						action: 'Get Fields',
 					},
 					{
-						name: 'Create Fields',
-						value: 'Create Fields',
-						description: 'Create all fields of a specified datasheet',
-						action: 'Create Fields',
+						name: 'Create Field',
+						value: 'Create Field',
+						description: 'Create all field of a specified datasheet',
+						action: 'Create Field',
 					},
 					{
-						name: 'Delete Fields',
-						value: 'Delete Fields',
-						description: 'Delete fields of a specified datasheet',
-						action: 'Delete Fields',
+						name: 'Delete Field',
+						value: 'Delete Field',
+						description: 'Delete field of a specified datasheet',
+						action: 'Delete Field',
 					},
 
 				],
@@ -204,10 +204,10 @@ export class FriendGrid implements INodeType {
 				displayOptions: {
 					show: {
 						operation: [
-							'Search node',
+							'Search node','Create Field','Delete Field',
 						],
 						resource: [
-							'Node',
+							'Node','Field',
 						],
 					},
 				},
@@ -225,18 +225,43 @@ export class FriendGrid implements INodeType {
 		show: {
 			operation: [
 				'Get Views',
+				'Get Records','Create Record','Update Record','Delete Record',
+				'Get Fields','Create Field','Delete Field',
 			],
 			resource: [
-				'View',
+				'View','Record','Field'
 			],
 		},
 	},
 	default: '',
 	placeholder: 'dst0vPx2577RdMN9MC',
-	description: 'Input Space ID or Space Name',
+	description: 'Input Datasheet ID or Datasheet Name',
 },
 // End input Datasheet ID ---->
-			// end test
+
+// <---- begin input ViewID
+{
+	displayName: 'ViewID',
+	name: 'ViewID',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			operation: [
+				'Get Records',
+			],
+			resource: [
+				'Record',
+			],
+		},
+	},
+	default: '',
+	placeholder: 'viw4mnkqkaqdh',
+	description: 'Input View ID or View Name',
+},
+// End input ViewID ---->
+
+	
 
 			//operation View
 			{
