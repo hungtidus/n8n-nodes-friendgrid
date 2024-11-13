@@ -17,22 +17,22 @@ export class FriendGrid implements INodeType {
 	description: INodeTypeDescription = {
 		// Basic node details will go here
 		displayName: 'FriendGrid',
-name: 'friendGrid',
-icon: 'file:sendgrid.svg',
-group: ['transform'],
-version: 1,
-description: 'Consume SendGrid API',
-defaults: {
-	name: 'FriendGrid',
-},
-inputs: ['main'],
-outputs: ['main'],
-credentials: [
-	{
-		name: 'friendGridApi',
-		required: true,
-	},
-],
+		name: 'friendGrid',
+		icon: 'file:sendgrid.svg',
+		group: ['transform'],
+		version: 1,
+		description: 'Consume SendGrid API',
+		defaults: {
+			name: 'FriendGrid',
+		},
+		inputs: ['main'],
+		outputs: ['main'],
+		credentials: [
+			{
+				name: 'friendGridApi',
+				required: true,
+			},
+		],
 		properties: [
 			// Resources and operations will go here
 			{
@@ -41,14 +41,18 @@ credentials: [
 				type: 'options',
 				options: [
 					{
-						name: 'Contact',
-						value: 'contact',
+						name: 'Space',
+						value: 'Space',
+					},
+					{
+						name: 'Node',
+						value: 'Node',
 					},
 				],
-				default: 'contact',
+				default: 'Space',
 				noDataExpression: true,
 				required: true,
-				description: 'Create a new contact',
+				description: 'Get the List of Spaces',
 			},
 			{
 				displayName: 'Operation',
@@ -57,116 +61,153 @@ credentials: [
 				displayOptions: {
 					show: {
 						resource: [
-							'contact',
+							'Space',
 						],
 					},
 				},
 				options: [
 					{
-						name: 'Create',
-						value: 'create',
-						description: 'Create a contact',
-						action: 'Create a contact',
+						name: 'List space',
+						value: 'List space',
+						description: 'Get the List of Spaces',
+						action: 'List space',
 					},
 				],
-				default: 'create',
+				default: 'List space',
+				noDataExpression: true,
+			},
+
+			// begin test
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				displayOptions: {
+					show: {
+						resource: [
+							'Node',
+						],
+					},
+				},
+				options: [
+					{
+						name: 'Search node',
+						value: 'Search node',
+						description: 'Search Datasheet node',
+						action: 'Search node',
+					},
+				],
+				default: 'Search node',
 				noDataExpression: true,
 			},
 			{
-				displayName: 'Email',
-				name: 'email',
+				displayName: 'Space ID',
+				name: 'spaceId',
 				type: 'string',
 				required: true,
 				displayOptions: {
 					show: {
 						operation: [
-							'create',
+							'Search node',
 						],
 						resource: [
-							'contact',
+							'Node',
 						],
 					},
 				},
-				default:'',
-				placeholder: 'name@email.com',
-				description:'Primary email for the contact',
+				default: '',
+				placeholder: 'spcX9P2xUcKst',
+				description: 'Input Space ID or Space Name',
 			},
-			{
-				displayName: 'Additional Fields',
-				name: 'additionalFields',
-				type: 'collection',
-				placeholder: 'Add Field',
-				default: {},
-				displayOptions: {
-					show: {
-						resource: [
-							'contact',
-						],
-						operation: [
-							'create',
-						],
+
+			// end test
+
+
+			/*	{
+					displayName: 'Additional Fields',
+					name: 'additionalFields',
+					type: 'collection',
+					placeholder: 'Add Field',
+					default: {},
+					displayOptions: {
+						show: {
+							resource: [
+								'Space',
+							],
+							operation: [
+								'create',
+							],
+						},
 					},
-				},
-				options: [
-					{
-						displayName: 'First Name',
-						name: 'firstName',
-						type: 'string',
-						default: '',
-					},
-					{
-						displayName: 'Last Name',
-						name: 'lastName',
-						type: 'string',
-						default: '',
-					},
-				],
-			},
+					options: [
+						{
+							displayName: 'First Name',
+							name: 'firstName',
+							type: 'string',
+							default: '',
+						},
+						{
+							displayName: 'Last Name',
+							name: 'lastName',
+							type: 'string',
+							default: '',
+						},
+					],
+				},*/
 		],
 	};
 	// The execute method will go here
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		// Handle data coming from previous nodes
-const items = this.getInputData();
-let responseData;
-const returnData = [];
-const resource = this.getNodeParameter('resource', 0) as string;
-const operation = this.getNodeParameter('operation', 0) as string;
+		const items = this.getInputData();
+		let responseData;
+		const returnData = [];
+		const resource = this.getNodeParameter('resource', 0) as string;
+		const operation = this.getNodeParameter('operation', 0) as string;
 
-// For each item, make an API call to create a contact
-for (let i = 0; i < items.length; i++) {
-	if (resource === 'contact') {
-		if (operation === 'create') {
-			// Get email input
-			const email = this.getNodeParameter('email', i) as string;
-			// Get additional fields input
-			const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-			const data: IDataObject = {
-				email,
-			};
+		// For each item, make an API call to create a Space
+		for (let i = 0; i < items.length; i++) {
+			if (resource === 'Space') {
+				if (operation === 'List space') {
+					const options: OptionsWithUri = {
+						headers: {
+							'Accept': 'application/json',
+						},
+						method: 'GET', //no body				
+						uri: `https://aitable.ai/fusion/v1/spaces`,
+						json: true,
+					};
+					responseData = await this.helpers.requestWithAuthentication.call(this, 'friendGridApi', options);
+					returnData.push(responseData);
+				}
+			} else if (resource === 'Node') {
+				if (operation === 'Search node') {
+					// Get SpaceID input
+					const spaceid = this.getNodeParameter('spaceId', i) as string;
+					// Get additional fields input
+					//const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+					const data: IDataObject = {
+						spaceid,
+					};
 
-			Object.assign(data, additionalFields);
+					Object.assign(data);
 
-			// Make HTTP request according to https://sendgrid.com/docs/api-reference/
-			const options: OptionsWithUri = {
-				headers: {
-					'Accept': 'application/json',
-				},
-				method: 'PUT',
-				body: {
-					contacts: [
-						data,
-					],
-				},
-				uri: `https://api.sendgrid.com/v3/marketing/contacts`,
-				json: true,
-			};
-			responseData = await this.helpers.requestWithAuthentication.call(this, 'friendGridApi', options);
-			returnData.push(responseData);
+					// Make HTTP request according to https://developers.aitable.ai/api/search-nodes
+					const options: OptionsWithUri = {
+						headers: {
+							'Accept': 'application/json',
+						},
+						method: 'GET', // Sử dụng GET nếu đang tìm kiếm
+						//  body: data, // Chuyển body sang data nếu cần thiết
+						uri: `https://aitable.ai/fusion/v2/spaces/${spaceid}/nodes?type=Datasheet&permissions=0,1`,
+						json: true,
+					};
+					responseData = await this.helpers.requestWithAuthentication.call(this, 'friendGridApi', options);
+					returnData.push(responseData);
+				}
+			}
 		}
-	}
-}
-// Map data to n8n data structure
-return [this.helpers.returnJsonArray(returnData)];
+		// Map data to n8n data structure
+		return [this.helpers.returnJsonArray(returnData)];
 	}
 }
