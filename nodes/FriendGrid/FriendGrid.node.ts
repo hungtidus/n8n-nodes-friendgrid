@@ -49,6 +49,10 @@ export class FriendGrid implements INodeType {
 						value: 'Node',
 					},
 					{
+						name: 'View',
+						value: 'View',
+					},
+					{
 						name: 'Field',
 						value: 'Field',
 					},
@@ -211,8 +215,54 @@ export class FriendGrid implements INodeType {
 				placeholder: 'spcX9P2xUcKst',
 				description: 'Input Space ID or Space Name',
 			},
-
+// <---- begin input Datasheet ID
+{
+	displayName: 'Datasheet ID',
+	name: 'DatasheetID',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			operation: [
+				'Get Views',
+			],
+			resource: [
+				'View',
+			],
+		},
+	},
+	default: '',
+	placeholder: 'dst0vPx2577RdMN9MC',
+	description: 'Input Space ID or Space Name',
+},
+// End input Datasheet ID ---->
 			// end test
+
+			//operation View
+			{
+				displayName: 'View',
+				name: 'operation',
+				type: 'options',
+				displayOptions: {
+					show: {
+						resource: [
+							'View',
+						],
+					},
+				},
+				options: [
+					{
+						name: 'Get Views',
+						value: 'Get Views',
+						description: 'Get all views of a specified datasheet',
+						action: 'Get Views',
+					},
+				],
+				default: 'Get Views',
+				noDataExpression: true,
+			},
+	//end operation View
+
 
 
 			/*	{
@@ -298,6 +348,32 @@ export class FriendGrid implements INodeType {
 					returnData.push(responseData);
 				}
 			}
+			// <---- begin action Get Views
+	else if (resource === 'View') {
+		if (operation === 'Get Views') {
+			// Get datasheetID input
+			const datasheetID = this.getNodeParameter('DatasheetID', i) as string;
+			// Get additional fields input
+			//const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
+			const data: IDataObject = {
+				datasheetID,
+			};
+			Object.assign(data);
+			// Make HTTP request according to https://developers.aitable.ai/api/get-views/
+			const options: OptionsWithUri = {
+				headers: {
+					'Accept': 'application/json',
+				},
+				method: 'GET', // Sử dụng GET nếu đang tìm kiếm
+				//  body: data, // Chuyển body sang data nếu cần thiết
+				uri: `https://aitable.ai/fusion/v1/datasheets/${datasheetID}/views`,
+				json: true,
+			};
+			responseData = await this.helpers.requestWithAuthentication.call(this, 'friendGridApi', options);
+			returnData.push(responseData);
+		}
+	}
+// End action Get Views ---->
 		}
 		// Map data to n8n data structure
 		return [this.helpers.returnJsonArray(returnData)];
