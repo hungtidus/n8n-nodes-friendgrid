@@ -15,7 +15,6 @@ import {
 
 export class FriendGrid implements INodeType {
 	description: INodeTypeDescription = {
-		// Basic node details will go here
 		displayName: 'FriendGrid',
 		name: 'friendGrid',
 		icon: 'file:sendgrid.svg',
@@ -34,7 +33,6 @@ export class FriendGrid implements INodeType {
 			},
 		],
 		properties: [
-			// Resources and operations will go here
 			{
 				displayName: 'Resource',
 				name: 'resource',
@@ -53,20 +51,16 @@ export class FriendGrid implements INodeType {
 						value: 'View',
 					},
 					{
-						name: 'Field',
-						value: 'Field',
-					},
-					{
 						name: 'Record',
 						value: 'Record',
 					},
-
 				],
 				default: 'Space',
 				noDataExpression: true,
 				required: true,
-				description: 'Get the List of Spaces',
+				description: 'Resource to consume',
 			},
+			// Space Operations
 			{
 				displayName: 'Operation',
 				name: 'operation',
@@ -89,7 +83,7 @@ export class FriendGrid implements INodeType {
 				default: 'List space',
 				noDataExpression: true,
 			},
-			//operation Field
+			// Node Operations
 			{
 				displayName: 'Operation',
 				name: 'operation',
@@ -97,37 +91,45 @@ export class FriendGrid implements INodeType {
 				displayOptions: {
 					show: {
 						resource: [
-							'Field',
+							'Node',
 						],
 					},
 				},
 				options: [
 					{
-						name: 'Get Fields',
-						value: 'Get Fields',
-						description: 'Get all fields of a specified datasheet',
-						action: 'Get Fields',
+						name: 'Search node',
+						value: 'Search node',
+						description: 'Search Datasheet node',
+						action: 'Search node',
 					},
-					{
-						name: 'Create Field',
-						value: 'Create Field',
-						description: 'Create all field of a specified datasheet',
-						action: 'Create Field',
-					},
-					{
-						name: 'Delete Field',
-						value: 'Delete Field',
-						description: 'Delete field of a specified datasheet',
-						action: 'Delete Field',
-					},
-
 				],
-				default: 'Get Fields',
+				default: 'Search node',
 				noDataExpression: true,
 			},
-			///////////end operation field
-
-			//operation Record
+			// View Operations
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				displayOptions: {
+					show: {
+						resource: [
+							'View',
+						],
+					},
+				},
+				options: [
+					{
+						name: 'Get Views',
+						value: 'Get Views',
+						description: 'Get all views of a specified datasheet',
+						action: 'Get Views',
+					},
+				],
+				default: 'Get Views',
+				noDataExpression: true,
+			},
+			// Record Operations
 			{
 				displayName: 'Operation',
 				name: 'operation',
@@ -156,7 +158,7 @@ export class FriendGrid implements INodeType {
 						name: 'Update Record',
 						value: 'Update Record',
 						description: 'Update Record of a specified datasheet',
-						action: 'Update Record'
+						action: 'Update Record',
 					},
 					{
 						name: 'Delete Record',
@@ -164,38 +166,11 @@ export class FriendGrid implements INodeType {
 						description: 'Delete Record of a specified datasheet',
 						action: 'Delete Record',
 					},
-
 				],
 				default: 'Get Records',
 				noDataExpression: true,
 			},
-
-			//end operation Record
-
-
-			// begin test
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				displayOptions: {
-					show: {
-						resource: [
-							'Node',
-						],
-					},
-				},
-				options: [
-					{
-						name: 'Search node',
-						value: 'Search node',
-						description: 'Search Datasheet node',
-						action: 'Search node',
-					},
-				],
-				default: 'Search node',
-				noDataExpression: true,
-			},
+			// Input Parameters
 			{
 				displayName: 'Space ID',
 				name: 'spaceId',
@@ -204,10 +179,10 @@ export class FriendGrid implements INodeType {
 				displayOptions: {
 					show: {
 						operation: [
-							'Search node','Create Field','Delete Field',
+							'Search node',
 						],
 						resource: [
-							'Node','Field',
+							'Node',
 						],
 					},
 				},
@@ -215,157 +190,122 @@ export class FriendGrid implements INodeType {
 				placeholder: 'spcX9P2xUcKst',
 				description: 'Input Space ID or Space Name',
 			},
-// <---- begin input Datasheet ID
-{
-	displayName: 'Datasheet ID',
-	name: 'DatasheetID',
-	type: 'string',
-	required: true,
-	displayOptions: {
-		show: {
-			operation: [
-				'Get Views',
-				'Get Records','Create Record','Update Record','Delete Record',
-				'Get Fields','Create Field','Delete Field',
-			],
-			resource: [
-				'View','Record','Field'
-			],
-		},
-	},
-	default: '',
-	placeholder: 'dst0vPx2577RdMN9MC',
-	description: 'Input Datasheet ID or Datasheet Name',
-},
-// End input Datasheet ID ---->
-
-// <---- begin input ViewID
-{
-	displayName: 'ViewID',
-	name: 'ViewID',
-	type: 'string',
-	required: true,
-	displayOptions: {
-		show: {
-			operation: [
-				'Get Records',
-			],
-			resource: [
-				'Record',
-			],
-		},
-	},
-	default: '',
-	placeholder: 'viw4mnkqkaqdh',
-	description: 'Input View ID or View Name',
-},
-// End input ViewID ---->
-
-	
-
-			//operation View
 			{
-				displayName: 'View',
-				name: 'operation',
-				type: 'options',
+				displayName: 'Datasheet ID',
+				name: 'DatasheetID',
+				type: 'string',
+				required: true,
 				displayOptions: {
 					show: {
+						operation: [
+							'Get Views',
+							'Get Records',
+							'Create Record',
+							'Update Record',
+							'Delete Record',
+						],
 						resource: [
 							'View',
+							'Record',
 						],
 					},
 				},
-				options: [
-					{
-						name: 'Get Views',
-						value: 'Get Views',
-						description: 'Get all views of a specified datasheet',
-						action: 'Get Views',
-					},
-				],
-				default: 'Get Views',
-				noDataExpression: true,
+				default: '',
+				placeholder: 'dst0vPx2577RdMN9MC',
+				description: 'Input Datasheet ID or Datasheet Name',
 			},
-	//end operation View
-
-
-
-			/*	{
-					displayName: 'Additional Fields',
-					name: 'additionalFields',
-					type: 'collection',
-					placeholder: 'Add Field',
-					default: {},
-					displayOptions: {
-						show: {
-							resource: [
-								'Space',
-							],
-							operation: [
-								'create',
-							],
-						},
+			{
+				displayName: 'View ID',
+				name: 'ViewID',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						operation: [
+							'Get Records',
+						],
+						resource: [
+							'Record',
+						],
 					},
-					options: [
-						{
-							displayName: 'First Name',
-							name: 'firstName',
-							type: 'string',
-							default: '',
-						},
-						{
-							displayName: 'Last Name',
-							name: 'lastName',
-							type: 'string',
-							default: '',
-						},
-					],
-				},*/
+				},
+				default: '',
+				placeholder: 'viw4mnkqkaqdh',
+				description: 'Input View ID or View Name',
+			},
+			
+			{
+				displayName: 'Record ID',
+				name: 'recordId',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						operation: [
+							'Delete Record','Update Record'
+						],
+						resource: [
+							'Record',
+						],
+					},
+				},
+				default: '',
+				description: 'Comma-separated record ID to delete',
+			},
+			{
+				displayName: 'Records Body',
+				name: 'records_body',
+				type: 'json',
+				required: true,
+				displayOptions: {
+					show: {
+						operation: [
+							'Create Record',
+							'Update Record',
+						],
+						resource: [
+							'Record',
+						],
+					},
+				},
+				default: '',
+				description: 'Records data in JSON format',
+			},
 		],
 	};
-	// The execute method will go here
+
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-		// Handle data coming from previous nodes
 		const items = this.getInputData();
 		let responseData;
 		const returnData = [];
 		const resource = this.getNodeParameter('resource', 0) as string;
 		const operation = this.getNodeParameter('operation', 0) as string;
 
-		// For each item, make an API call to create a Space
 		for (let i = 0; i < items.length; i++) {
+			// Space Resource
 			if (resource === 'Space') {
 				if (operation === 'List space') {
 					const options: OptionsWithUri = {
 						headers: {
 							'Accept': 'application/json',
 						},
-						method: 'GET', //no body				
+						method: 'GET',
 						uri: `https://aitable.ai/fusion/v1/spaces`,
 						json: true,
 					};
 					responseData = await this.helpers.requestWithAuthentication.call(this, 'friendGridApi', options);
 					returnData.push(responseData);
 				}
-			} else if (resource === 'Node') {
+			}
+			// Node Resource
+			else if (resource === 'Node') {
 				if (operation === 'Search node') {
-					// Get SpaceID input
 					const spaceid = this.getNodeParameter('spaceId', i) as string;
-					// Get additional fields input
-					//const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-					const data: IDataObject = {
-						spaceid,
-					};
-
-					Object.assign(data);
-
-					// Make HTTP request according to https://developers.aitable.ai/api/search-nodes
 					const options: OptionsWithUri = {
 						headers: {
 							'Accept': 'application/json',
 						},
-						method: 'GET', // Sử dụng GET nếu đang tìm kiếm
-						//  body: data, // Chuyển body sang data nếu cần thiết
+						method: 'GET',
 						uri: `https://aitable.ai/fusion/v2/spaces/${spaceid}/nodes?type=Datasheet&permissions=0,1`,
 						json: true,
 					};
@@ -373,34 +313,87 @@ export class FriendGrid implements INodeType {
 					returnData.push(responseData);
 				}
 			}
-			// <---- begin action Get Views
-	else if (resource === 'View') {
-		if (operation === 'Get Views') {
-			// Get datasheetID input
-			const datasheetID = this.getNodeParameter('DatasheetID', i) as string;
-			// Get additional fields input
-			//const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
-			const data: IDataObject = {
-				datasheetID,
-			};
-			Object.assign(data);
-			// Make HTTP request according to https://developers.aitable.ai/api/get-views/
-			const options: OptionsWithUri = {
-				headers: {
-					'Accept': 'application/json',
-				},
-				method: 'GET', // Sử dụng GET nếu đang tìm kiếm
-				//  body: data, // Chuyển body sang data nếu cần thiết
-				uri: `https://aitable.ai/fusion/v1/datasheets/${datasheetID}/views`,
-				json: true,
-			};
-			responseData = await this.helpers.requestWithAuthentication.call(this, 'friendGridApi', options);
-			returnData.push(responseData);
+			// View Resource
+			else if (resource === 'View') {
+				if (operation === 'Get Views') {
+					const datasheetID = this.getNodeParameter('DatasheetID', i) as string;
+					const options: OptionsWithUri = {
+						headers: {
+							'Accept': 'application/json',
+						},
+						method: 'GET',
+						uri: `https://aitable.ai/fusion/v1/datasheets/${datasheetID}/views`,
+						json: true,
+					};
+					responseData = await this.helpers.requestWithAuthentication.call(this, 'friendGridApi', options);
+					returnData.push(responseData);
+				}
+			}
+			// Record Resource
+			else if (resource === 'Record') {
+				const datasheetID = this.getNodeParameter('DatasheetID', i) as string;
+
+				if (operation === 'Get Records') {
+					const viewId = this.getNodeParameter('ViewID', i) as string;
+					const options: OptionsWithUri = {
+						headers: {
+							'Accept': 'application/json',
+						},
+						method: 'GET',
+						uri: `https://aitable.ai/fusion/v1/datasheets/${datasheetID}/records?viewId=${viewId}`,
+						json: true,
+					};
+					responseData = await this.helpers.requestWithAuthentication.call(this, 'friendGridApi', options);
+					returnData.push(responseData);
+				}
+				else if (operation === 'Create Record') {
+					const records = this.getNodeParameter('records_body', i) as IDataObject;
+					const options: OptionsWithUri = {
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json',
+						},
+						method: 'POST',
+						body: records,
+
+						uri: `https://aitable.ai/fusion/v1/datasheets/${datasheetID}/records`,
+						json: true,
+					};
+					responseData = await this.helpers.requestWithAuthentication.call(this, 'friendGridApi', options);
+					returnData.push(responseData);
+				}
+				else if (operation === 'Update Record') {
+					const records = this.getNodeParameter('records', i) as IDataObject;
+					const options: OptionsWithUri = {
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json',
+						},
+						method: 'PATCH',
+						body: {
+							records: records,
+						},
+						uri: `https://aitable.ai/fusion/v1/datasheets/${datasheetID}/records`,
+						json: true,
+					};
+					responseData = await this.helpers.requestWithAuthentication.call(this, 'friendGridApi', options);
+					returnData.push(responseData);
+				}
+				else if (operation === 'Delete Record') {
+					const recordIds = this.getNodeParameter('recordId', i) as string;
+					const options: OptionsWithUri = {
+						headers: {
+							'Accept': 'application/json',
+						},
+						method: 'DELETE',
+						uri: `https://aitable.ai/fusion/v1/datasheets/${datasheetID}/records?recordIds=${recordIds}`,
+						json: true,
+					};
+					responseData = await this.helpers.requestWithAuthentication.call(this, 'friendGridApi', options);
+					returnData.push(responseData);
+				}
+			}
 		}
-	}
-// End action Get Views ---->
-		}
-		// Map data to n8n data structure
 		return [this.helpers.returnJsonArray(returnData)];
 	}
 }
