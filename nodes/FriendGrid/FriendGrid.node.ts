@@ -363,16 +363,14 @@ export class FriendGrid implements INodeType {
 					returnData.push(responseData);
 				}
 				else if (operation === 'Update Record') {
-					const records = this.getNodeParameter('records', i) as IDataObject;
+					const records = this.getNodeParameter('records_body', i) as IDataObject;
 					const options: OptionsWithUri = {
 						headers: {
 							'Accept': 'application/json',
 							'Content-Type': 'application/json',
 						},
 						method: 'PATCH',
-						body: {
-							records: records,
-						},
+						body: records,
 						uri: `https://aitable.ai/fusion/v1/datasheets/${datasheetID}/records`,
 						json: true,
 					};
