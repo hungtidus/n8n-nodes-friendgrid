@@ -48,6 +48,15 @@ export class FriendGrid implements INodeType {
 						name: 'Node',
 						value: 'Node',
 					},
+					{
+						name: 'Field',
+						value: 'Field',
+					},
+					{
+						name: 'Record',
+						value: 'Record',
+					},
+
 				],
 				default: 'Space',
 				noDataExpression: true,
@@ -76,6 +85,89 @@ export class FriendGrid implements INodeType {
 				default: 'List space',
 				noDataExpression: true,
 			},
+			//operation Field
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				displayOptions: {
+					show: {
+						resource: [
+							'Field',
+						],
+					},
+				},
+				options: [
+					{
+						name: 'Get Fields',
+						value: 'Get Fields',
+						description: 'Get all fields of a specified datasheet',
+						action: 'Get Fields',
+					},
+					{
+						name: 'Create Fields',
+						value: 'Create Fields',
+						description: 'Create all fields of a specified datasheet',
+						action: 'Create Fields',
+					},
+					{
+						name: 'Delete Fields',
+						value: 'Delete Fields',
+						description: 'Delete fields of a specified datasheet',
+						action: 'Delete Fields',
+					},
+
+				],
+				default: 'Get Fields',
+				noDataExpression: true,
+			},
+			///////////end operation field
+
+			//operation Record
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				displayOptions: {
+					show: {
+						resource: [
+							'Record',
+						],
+					},
+				},
+				options: [
+					{
+						name: 'Get Records',
+						value: 'Get Records',
+						description: 'Get all Records of a specified datasheet',
+						action: 'Get Records',
+					},
+					{
+						name: 'Create Record',
+						value: 'Create Record',
+						description: 'Create a Record of a specified datasheet',
+						action: 'Create Record',
+					},
+					{
+						name: 'Update Record',
+						value: 'Update Record',
+						description: 'Update Record of a specified datasheet',
+						action: 'Update Record'
+					},
+					{
+						name: 'Delete Record',
+						value: 'Delete Record',
+						description: 'Delete Record of a specified datasheet',
+						action: 'Delete Record',
+					},
+
+				],
+				default: 'Get Records',
+				noDataExpression: true,
+			},
+
+			//end operation Record
+
 
 			// begin test
 			{
