@@ -233,7 +233,7 @@ export class FriendGrid implements INodeType {
 				placeholder: 'viw4mnkqkaqdh',
 				description: 'Input View ID or View Name',
 			},
-			
+
 			{
 				displayName: 'Record ID',
 				name: 'recordId',
@@ -242,7 +242,7 @@ export class FriendGrid implements INodeType {
 				displayOptions: {
 					show: {
 						operation: [
-							'Delete Record','Update Record'
+							'Delete Record',
 						],
 						resource: [
 							'Record',
